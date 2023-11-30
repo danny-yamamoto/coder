@@ -1,36 +1,29 @@
-fn sorting(output: &str) -> Vec<i32> {
-    let mut ret = Vec::new();
+use std::collections::HashMap;
+
+fn parse_log(output: &str) -> HashMap<String, String> {
+    let mut ret = HashMap::new();
     if output.is_empty() {
-        return  ret;
-    }
-    if !output.contains(",") {
         return ret;
     }
-    let mut numbers: Vec<i32> = Vec::new();
-    let num_ary:Vec<i32> = output
-        .split(",")
-        .map(|s| s.trim())
-        .filter_map(|s| s.parse().ok())
-        .collect();
-    for row in num_ary {
-        numbers.push(row);
+    if !output.contains(":") {
+        return  ret;
     }
-    numbers.sort();
-    let min_value = numbers[0];
-    let mut max_value = numbers[0];
-    if numbers.len() > 1 {
-        max_value = numbers[numbers.len()-1];
+    for row in output.lines() {
+        if row.is_empty() {
+            continue;
+        }
+        if !row.contains(":") {
+            continue;
+        }
+        if let Some((log_date, log_value)) = row.split_once(":") {
+            ret.insert(log_date.trim().to_string(), log_value.trim().to_string());
+        }
     }
-    ret.push(min_value);
-    ret.push(max_value);
-    return  ret;
+    ret
 }
 
 fn main() {
-    let ary = "3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5".to_string();
-    let sort_ary = sorting(&ary);
-    for row in sort_ary {
-        let str_value = row.to_string();
-        println!("{}", str_value);
-    }
+    let log_data = "2023-01-01: New Year's Day\n2023-02-14: Valentine's Day\n2023-03-17: St. Patrick's Day\n2023-03-20\n".to_string();
+    let log_json = parse_log(&log_data);
+    println!("{:#?}", log_json);
 }
