@@ -3,16 +3,14 @@ package main
 import "fmt"
 
 func charCnt(input string, searchText string) int {
-	ret := 0
-	if input == "" {
-		return ret
-	}
+	count := 0
+	searchRune := rune(searchText[0])
 	for _, char := range input {
-		if string(char) == searchText {
-			ret++
+		if char == searchRune {
+			count++
 		}
 	}
-	return ret
+	return count
 }
 
 func main() {
