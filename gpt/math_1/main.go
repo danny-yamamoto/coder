@@ -14,24 +14,23 @@ func calc(output string) ([]float64, error) {
 		return ret, nil
 	}
 	var medianFloat float64 = 0
-	ary := strings.Split(output, ",")
+	elements := strings.Split(output, ",")
 	var total float64 = 0
-	var numbers []int
-	for _, v := range ary {
+	var numbers []float64
+	for _, v := range elements {
 		if v == "" {
 			continue
 		}
 		row := strings.Trim(v, " ")
 		numValue, err := strconv.ParseFloat(row, 64)
-		numInt, _ := strconv.Atoi(row)
 		if err != nil {
 			continue
 		}
 		total = total + numValue
-		numbers = append(numbers, numInt)
+		numbers = append(numbers, numValue)
 	}
-	sort.Ints(numbers)
-	numLen := len(ary)
+	sort.Float64s(numbers)
+	numLen := len(numbers)
 	quotient := numLen / 2
 	remainder := numLen % 2
 	numAvg := total / float64(numLen)
@@ -40,10 +39,8 @@ func calc(output string) ([]float64, error) {
 		first := float64(numbers[quotient-1])
 		second := float64(numbers[quotient])
 		medianFloat = (first + second) / 2
-		//fmt.Printf("medianFloat: %f\n", medianFloat)
 	} else {
 		medianFloat = float64(numbers[quotient])
-		//fmt.Printf("medianFloat: %f\n", medianFloat)
 	}
 	ret = append(ret, medianFloat)
 	return ret, nil
