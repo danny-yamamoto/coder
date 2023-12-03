@@ -8,26 +8,21 @@ import (
 
 func findCommonElements(input1 string, input2 string) []string {
 	var commonElements []string
+	set := make(map[int]struct{})
 	numbers1 := strings.Split(input1, ",")
+	for _, val := range numbers1 {
+		num, _ := strconv.Atoi(strings.TrimSpace(val))
+		set[num] = struct{}{}
+	}
 	numbers2 := strings.Split(input2, ",")
-	for _, val1 := range numbers1 {
-		val1Trim := strings.TrimSpace(val1)
-		if val1Trim == "" {
-			continue
-		}
-		num1, _ := strconv.Atoi(val1Trim)
-		for _, val2 := range numbers2 {
-			val2Trim := strings.TrimSpace(val2)
-			if val2Trim == "" {
-				continue
-			}
-			num2, _ := strconv.Atoi(val2Trim)
-			if num1 == num2 {
-				commonElements = append(commonElements, val1Trim)
-				continue
-			}
+	for _, val2 := range numbers2 {
+		num2, _ := strconv.Atoi(strings.TrimSpace(val2))
+		if _, exists := set[num2]; exists {
+			commonElements = append(commonElements, strconv.Itoa(num2))
+			delete(set, num2)
 		}
 	}
+
 	return commonElements
 }
 
