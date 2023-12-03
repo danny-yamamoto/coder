@@ -1,27 +1,17 @@
-use std::vec;
+use std::collections::HashSet;
 
-fn find_common_elements(input1: &str, input2: &str) -> String {
-    let elments = "".to_string();
-    let mut common_numbers = Vec::new();
-    let mut index = 0;
-    let numbers1: Vec<i32> = input1.split(",").map(|s| s.trim()).filter_map(|s| s.parse().ok()).collect();
-    let numbers2: Vec<i32> = input2.split(",").map(|s| s.trim()).filter_map(|s| s.parse().ok()).collect();
-    for num1 in numbers1 {
-        for num2 in numbers2 {
-            if num1 == num2 {
-                common_numbers.insert(index, num1.to_string());
-                index += 1;
-                continue;
-            }
-        }
-    }
-    return elments;
+fn find_common_elements(input1: &str, input2: &str) -> Vec<String> {
+    let set_1: HashSet<i32> = input1.split(",").map(|s| s.trim()).filter_map(|s| s.parse().ok()).collect();
+    let set_2: HashSet<i32> = input2.split(",").map(|s| s.trim()).filter_map(|s| s.parse().ok()).collect();
+    let mut common_numbers: Vec<String> = set_1.intersection(&set_2).into_iter().map(|n| n.to_string()).collect();
+    common_numbers.sort();
+    common_numbers
 }
 
 fn main() {
-    // array1
-    // array2
-    // find_common_elements
-    // print
-    println!("hello")
+    let input1 = "1, 3, 4, 6, 7, 9".to_string();
+    let input2 = "1, 2, 4, 5, 9, 10".to_string();
+    let match_numbers = find_common_elements(&input1, &input2);
+    let result = match_numbers.join(",");
+    println!("{}", result);
 }
