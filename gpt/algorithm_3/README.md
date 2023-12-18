@@ -12,3 +12,10 @@ arr2: 整数の配列。
 入力: arr1 = [1, 3, 4, 6, 7, 9], arr2 = [1, 2, 4, 5, 9, 10]
 出力: [1, 4, 9]
 ```
+
+## note
+- `func delete(m map[Type]Type1, key Type)`
+- `make(map[int]struct{})`
+    * メモリ効率
+    * 意図の明確化
+    * ユニークなキーの保証
